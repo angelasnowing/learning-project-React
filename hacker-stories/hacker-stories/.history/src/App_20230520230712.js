@@ -65,9 +65,10 @@ const Search = ({search, onSearch}) => {
 
 const InputWithLabel = ({id, label, type="text", value, onSearch}) => (
   <>
-    <label htmlFor={id}>Search: </label>
-    <input id="search" type="text" value={value} onChange={onSearch} />
+  <label htmlFor="search">Search: </label>
+  <input id="search" type="text" value={search} onChange={onSearch} />
   </>
+  
 )
 
 const List = ({list}) => (
