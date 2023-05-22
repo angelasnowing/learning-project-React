@@ -49,7 +49,7 @@ const App = () => {
 
     try{
       const result = await axios.get(`${API_ENDPOINT}${searchTerm}`)
-      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.data.hits})
+      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.hits})
     }catch{
       dispatchStories({type: "STORIES_FETCH_FAILURE"})
     }

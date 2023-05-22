@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios'
 import './App.css';
 
 const App = () => {
@@ -43,17 +42,17 @@ const App = () => {
     localStorage.setItem('search', searchTerm)
   }, [searchTerm])
 
-  const handleFetchStories = React.useCallback(async ()=>{
+  const handleFetchStories = React.useCallback(()=>{
     if (searchTerm === '') return 
     dispatchStories({type: "STORIES_FETCH_INIT"})
-
-    try{
-      const result = await axios.get(`${API_ENDPOINT}${searchTerm}`)
-      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.data.hits})
-    }catch{
-      dispatchStories({type: "STORIES_FETCH_FAILURE"})
-    }
     
+    fetch(`${API_ENDPOINT}${searchTerm}`)
+    .then(response => response.json())
+    .then(result => {
+      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.hits})
+    }).catch(()=>{
+      dispatchStories({type: "STORIES_FETCH_FAILURE"})
+    })
   }, [searchTerm])
 
   React.useEffect(()=>{
@@ -75,6 +74,14 @@ const App = () => {
 
   // }, [searchTerm])
 
+  const handleSearchSubmit = ()=>{
+
+  }
+
+  const handleSearchInput = ()=>{
+
+  }
+
   return (
     <div>
       <h1>My Hacker Stories</h1>
@@ -83,15 +90,21 @@ const App = () => {
       {stories.isError && <p>Something went wrong ...</p>}
       {stories.isLoading? <p>loading ...</p> :(<List list={stories.data} onRemoveItem={handleRemoveItem} />)}
 
+      <button
+        type="button"
+        disabled={!searchTerm}
+        onClick={handleSearchSubmit}>
+        Submit
+      </button>
     </div>
   )
 };
 
-const Search = ({search, onSearch}) => {
+const Search = ({search, handleSearchInput}) => {
   return (
     <div>
       
-      <InputWithLabel id="search" type="text" value={search} onSearch={onSearch} isFocused>
+      <InputWithLabel id="search" type="text" value={search} onInputChange={handleSearchInput} isFocused>
         <strong>Search:</strong>
       </InputWithLabel>
       
@@ -99,7 +112,7 @@ const Search = ({search, onSearch}) => {
     );    
 }
 
-const InputWithLabel = ({id, type="text", value, onSearch, children, isFocused}) => {
+const InputWithLabel = ({id, type="text", value, children, isFocused, onInputChange}) => {
   const inputRef = React.useRef()
   React.useEffect(()=>{
     if (isFocused && inputRef.current){
@@ -109,7 +122,7 @@ const InputWithLabel = ({id, type="text", value, onSearch, children, isFocused})
   return (
     <>
     <label htmlFor={id}>{children}</label>
-    <input id={id} type={type} ref={inputRef} value={value} onChange={onSearch} />
+    <input id={id} type={type} ref={inputRef} value={value} onInputChange={onInputChange} />
   </>
   )
 }
