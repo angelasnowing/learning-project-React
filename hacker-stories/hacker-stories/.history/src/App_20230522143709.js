@@ -45,22 +45,17 @@ const App = () => {
   }
 
   React.useEffect(()=>{
-    setIsLoading(true)
+    //console.log(getAsyncStories.then, "=== getAsyncStories ===")
     getAsyncStories().then(result => {
       setSearchStories(result.data.stories)
-      setIsLoading(false)
-    }).catch(()=>{
-      setIsError(true)
     })
   }, [])
-
   return (
     <div>
       <h1>My Hacker Stories</h1>
       <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
-      {isError && <p>Something went wrong ...</p>}
-      {isLoading? <p>loading ...</p> :(<List list={searchStories} onRemoveItem={handleRemoveItem} />)}
+      <List list={searchStories} onRemoveItem={handleRemoveItem} />
     </div>
   )
 };
