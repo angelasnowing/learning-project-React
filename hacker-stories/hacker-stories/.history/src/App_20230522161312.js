@@ -72,7 +72,7 @@ const App = () => {
       <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       {isError && <p>Something went wrong ...</p>}
-      {isLoading? <p>loading ...</p> :(<List list={stories} onRemoveItem={handleRemoveItem} />)}
+      {isLoading? <p>loading ...</p> :(<List list={searchStories} onRemoveItem={handleRemoveItem} />)}
     </div>
   )
 };
