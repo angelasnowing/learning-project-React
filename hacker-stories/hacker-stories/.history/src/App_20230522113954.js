@@ -25,8 +25,7 @@ const App = () => {
   };
 
   const handleRemoveItem = (item)=>{
-   let newStories = searchStories.filter(story => story.objectID != item.objectID)
-   setSearchStories(newStories)
+   return searchStories.filter(story => story.objectID != item.objectID)
   }
   React.useEffect(() => {
     console.log("=== useEffect searchTerm ===", searchTerm)
@@ -100,7 +99,7 @@ const Item = ({item, onRemoveItem})=>(
     <span> {item.author}</span>
     <span>{item.num_comments}</span>
     <span>{item.points}</span>
-    <button type="button" onClick={()=>onRemoveItem(item)}>Dismiss</button>
+    <button type="button" onclick={onRemoveItem}>Dismiss</button>
   </li>
 )
 

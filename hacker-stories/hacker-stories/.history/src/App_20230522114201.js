@@ -88,7 +88,7 @@ const InputWithLabel = ({id, type="text", value, onSearch, children, isFocused})
 
 const List = ({list, onRemoveItem}) => (
   <ul>{list.map(item => (
-    <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem}></Item>
+    <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem(item)}></Item>
   ))}</ul>
 )
 
@@ -100,7 +100,7 @@ const Item = ({item, onRemoveItem})=>(
     <span> {item.author}</span>
     <span>{item.num_comments}</span>
     <span>{item.points}</span>
-    <button type="button" onClick={()=>onRemoveItem(item)}>Dismiss</button>
+    <button type="button" onClick={onRemoveItem}>Dismiss</button>
   </li>
 )
 

@@ -24,19 +24,15 @@ const App = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleRemoveItem = (item)=>{
-   let newStories = searchStories.filter(story => story.objectID != item.objectID)
-   setSearchStories(newStories)
-  }
   React.useEffect(() => {
     console.log("=== useEffect searchTerm ===", searchTerm)
     localStorage.setItem('search', searchTerm)
-  }, [searchTerm])
+  }, [])
 
-  // const searchedStories = stories.filter(story => {
-  //   // console.log("=== story searchTerm ===", searchTerm)
-  //   return story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  // })
+  const searchedStories = stories.filter(story => {
+    // console.log("=== story searchTerm ===", searchTerm)
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  })
 
   // const useSemiPersistence = (key, initialState) => {
   //   const [value, setValue] = React.useState(localStorage.getItem('value') || initialState)
@@ -53,7 +49,7 @@ const App = () => {
       <h1>My Hacker Stories</h1>
       <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
-      <List list={searchStories} onRemoveItem={handleRemoveItem} />
+      <List list={searchedStories} />
     </div>
   )
 };
@@ -86,13 +82,13 @@ const InputWithLabel = ({id, type="text", value, onSearch, children, isFocused})
 }
 
 
-const List = ({list, onRemoveItem}) => (
+const List = ({list}) => (
   <ul>{list.map(item => (
-    <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem}></Item>
+    <Item key={item.objectID} item={item}></Item>
   ))}</ul>
 )
 
-const Item = ({item, onRemoveItem})=>(
+const Item = ({item})=>(
   <li>
     <span>
       <a href={item.url}>{item.title} </a>
@@ -100,7 +96,6 @@ const Item = ({item, onRemoveItem})=>(
     <span> {item.author}</span>
     <span>{item.num_comments}</span>
     <span>{item.points}</span>
-    <button type="button" onClick={()=>onRemoveItem(item)}>Dismiss</button>
   </li>
 )
 
