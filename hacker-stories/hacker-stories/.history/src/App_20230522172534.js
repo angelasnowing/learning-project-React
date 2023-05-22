@@ -2,22 +2,60 @@ import React from 'react';
 import './App.css';
 
 const App = () => {
-  // const initialStories = [{
-  //     title: 'React',
-  //     url: 'https://reactjs.org/',
-  //     author: 'Jordan Walke',
-  //     num_comments: 3,
-  //     points: 4,
-  //     objectID: 0,
-  //   },{
-  //     title: 'Redux',
-  //     url: 'https://redux.js.org/',
-  //     author: 'Dan Abramov, Andrew Clark',
-  //     num_comments: 2,
-  //     points: 5,
-  //     objectID: 1,
-  // }];
+  const initialStories = [{
+      title: 'React',
+      url: 'https://reactjs.org/',
+      author: 'Jordan Walke',
+      num_comments: 3,
+      points: 4,
+      objectID: 0,
+    },{
+      title: 'Redux',
+      url: 'https://redux.js.org/',
+      author: 'Dan Abramov, Andrew Clark',
+      num_comments: 2,
+      points: 5,
+      objectID: 1,
+  }];
   const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') ?? '');
+  const [searchStories, setSearchStories] = React.useState([])
+  // const [isLoading, setIsLoading] = React.useState(false)
+  // const [isError, setIsError] = React.useState(false)
+
+  const handleSearch = (event) => {
+    // console.log("=== searchTerm ===", searchTerm)
+    setSearchTerm(event.target.value);
+  };
+
+  const handleRemoveItem = (item)=>{
+  //  let newStories = searchStories.filter(story => story.objectID !== item.objectID)
+  //  setSearchStories(newStories)
+    dispatchStories({type: "REMOVE_STORY", payload: item})
+  }
+  React.useEffect(() => {
+    console.log("=== useEffect searchTerm ===", searchTerm)
+    localStorage.setItem('search', searchTerm)
+  }, [searchTerm])
+
+  const getAsyncStories = ()=>{
+    return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({data: {stories: initialStories}})
+        }, 2000);
+    })
+  }
+
+  React.useEffect(()=>{
+    // setIsLoading(true)
+    dispatchStories({type: "STORIES_FETCH_INIT"})
+    getAsyncStories().then(result => {
+      // setSearchStories(result.data.stories)
+      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.data.stories})
+    }).catch(()=>{
+      dispatchStories({type: "STORIES_FETCH_FAILURE"})
+    })
+  }, [])
+
   const storiesReducer = (state, action) => {
     switch(action.type){
       case "STORIES_FETCH_INIT": return {...state, isLoading: true, isError: false}
@@ -27,38 +65,8 @@ const App = () => {
       default: throw new Error()
     }
   }
+
   const [stories, dispatchStories] = React.useReducer(storiesReducer, {data: [], isError: false, isLoading: false})
-  const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query="
-
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleRemoveItem = (item)=>{
-    dispatchStories({type: "REMOVE_STORY", payload: item})
-  }
-  React.useEffect(() => {
-    localStorage.setItem('search', searchTerm)
-  }, [searchTerm])
-
-
-  React.useEffect(()=>{
-
-    if (searchTerm === '') return 
-    dispatchStories({type: "STORIES_FETCH_INIT"})
-    
-    fetch(`${API_ENDPOINT}${searchTerm}`)
-    .then(response => response.json())
-    .then(result => {
-      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.hits})
-    }).catch(()=>{
-      dispatchStories({type: "STORIES_FETCH_FAILURE"})
-    })
-
-  }, [searchTerm])
-
-  
 
   return (
     <div>

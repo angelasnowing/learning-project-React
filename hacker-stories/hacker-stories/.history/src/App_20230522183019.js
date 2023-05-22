@@ -18,6 +18,16 @@ const App = () => {
   //     objectID: 1,
   // }];
   const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') ?? '');
+  const [stories, dispatchStories] = React.useReducer(storiesReducer, {data: [], isError: false, isLoading: false})
+  
+  const getAsyncStories = ()=>{
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+          resolve({data: {stories: initialStories}})
+        }, 2000);
+    })
+  }
+ 
   const storiesReducer = (state, action) => {
     switch(action.type){
       case "STORIES_FETCH_INIT": return {...state, isLoading: true, isError: false}
@@ -27,9 +37,6 @@ const App = () => {
       default: throw new Error()
     }
   }
-  const [stories, dispatchStories] = React.useReducer(storiesReducer, {data: [], isError: false, isLoading: false})
-  const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query="
-
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -44,19 +51,13 @@ const App = () => {
 
 
   React.useEffect(()=>{
-
-    if (searchTerm === '') return 
     dispatchStories({type: "STORIES_FETCH_INIT"})
-    
-    fetch(`${API_ENDPOINT}${searchTerm}`)
-    .then(response => response.json())
-    .then(result => {
-      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.hits})
+    getAsyncStories().then(result => {
+      dispatchStories({type: "STORIES_FETCH_SUCCESS", payload: result.data.stories})
     }).catch(()=>{
       dispatchStories({type: "STORIES_FETCH_FAILURE"})
     })
-
-  }, [searchTerm])
+  }, [])
 
   
 
