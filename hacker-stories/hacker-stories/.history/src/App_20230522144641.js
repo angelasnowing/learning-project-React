@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 
 const App = () => {
@@ -52,7 +52,7 @@ const App = () => {
     }).catch(()=>{
       setIsError(true)
     })
-  }, [])
+  }, [ ])
 
   return (
     <div>

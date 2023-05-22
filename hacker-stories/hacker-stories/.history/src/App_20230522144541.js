@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
   };
 
   const handleRemoveItem = (item)=>{
-   let newStories = searchStories.filter(story => story.objectID !== item.objectID)
+   let newStories = searchStories.filter(story => story.objectID != item.objectID)
    setSearchStories(newStories)
   }
   React.useEffect(() => {
