@@ -67,11 +67,11 @@ const Search = ({search, onSearch}) => {
 
 const InputWithLabel = ({id, type="text", value, onSearch, children, isFocused}) => {
   const inputRef = React.useRef()
-  React.useEffect(()=>{
-    if (isFocused && inputRef.current){
-      inputRef.current.focus()
-    }
-  }, [isFocused])
+  // React.useEffect(()=>{
+  //   if (isFocused && inputRef.current){
+  //     inputRef.current.focus()
+  //   }
+  // }, [isFocused])
   return (
     <>
     <label htmlFor={id}>{children}</label>

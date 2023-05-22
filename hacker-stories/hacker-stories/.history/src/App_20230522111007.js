@@ -60,6 +60,10 @@ const Search = ({search, onSearch}) => {
       <InputWithLabel id="search" type="text" value={search} onSearch={onSearch} isFocused>
         <strong>Search:</strong>
       </InputWithLabel>
+
+      {/* <InputWithLabel id="search" type="text" value={search} onSearch={onSearch} isFocused>
+        <strong>Search:</strong>
+      </InputWithLabel> */}
       
     </div>
     );    

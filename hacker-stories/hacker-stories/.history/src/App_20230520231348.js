@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './App.css';
 
 const App = () => {
@@ -57,7 +57,7 @@ const Search = ({search, onSearch}) => {
   return (
     <div>
       
-      <InputWithLabel id="search" type="text" value={search} onSearch={onSearch} isFocused>
+      <InputWithLabel id="search" type="text" value={search} onSearch={onSearch}>
         <strong>Search:</strong>
       </InputWithLabel>
       
@@ -65,21 +65,12 @@ const Search = ({search, onSearch}) => {
     );    
 }
 
-const InputWithLabel = ({id, type="text", value, onSearch, children, isFocused}) => {
-  const inputRef = React.useRef()
-  React.useEffect(()=>{
-    if (isFocused && inputRef.current){
-      inputRef.current.focus()
-    }
-  }, [isFocused])
-  return (
-    <>
+const InputWithLabel = ({id, type="text", value, onSearch, children}) => (
+  <>
     <label htmlFor={id}>{children}</label>
-    <input id={id} type={type} ref={inputRef} value={value} onChange={onSearch} />
+    <input id={id} type={type} value={value} onChange={onSearch} />
   </>
-  )
-}
-
+)
 
 const List = ({list}) => (
   <ul>{list.map(item => (
