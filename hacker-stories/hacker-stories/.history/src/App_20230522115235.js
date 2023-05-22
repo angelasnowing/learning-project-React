@@ -18,7 +18,7 @@ const App = () => {
       objectID: 1,
   }];
   const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') ?? '');
-  const [searchStories, setSearchStories] = React.useState([])
+  const [searchStories, setSearchStories] = React.useState(initialStories)
   const handleSearch = (event) => {
     // console.log("=== searchTerm ===", searchTerm)
     setSearchTerm(event.target.value);
@@ -34,19 +34,12 @@ const App = () => {
   }, [searchTerm])
 
   const getAsyncStories = ()=>{
-    return new Promise(resolve => {
+    new Promise(resolve => {
         setTimeout(() => {
-          resolve({data: {stories: initialStories}})
+          resolve({data: initialStories})
         }, 2000);
     })
   }
-
-  React.useEffect(()=>{
-    //console.log(getAsyncStories.then, "=== getAsyncStories ===")
-    getAsyncStories().then(result => {
-      setSearchStories(result.data.stories)
-    })
-  }, [])
   return (
     <div>
       <h1>My Hacker Stories</h1>

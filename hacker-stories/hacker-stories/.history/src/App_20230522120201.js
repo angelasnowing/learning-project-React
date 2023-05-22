@@ -34,7 +34,7 @@ const App = () => {
   }, [searchTerm])
 
   const getAsyncStories = ()=>{
-    return new Promise(resolve => {
+    new Promise(resolve => {
         setTimeout(() => {
           resolve({data: {stories: initialStories}})
         }, 2000);
@@ -42,8 +42,8 @@ const App = () => {
   }
 
   React.useEffect(()=>{
-    //console.log(getAsyncStories.then, "=== getAsyncStories ===")
-    getAsyncStories().then(result => {
+    console.log(getAsyncStories.then, "=== getAsyncStories ===")
+    getAsyncStories.then(result => {
       setSearchStories(result.data.stories)
     })
   }, [])

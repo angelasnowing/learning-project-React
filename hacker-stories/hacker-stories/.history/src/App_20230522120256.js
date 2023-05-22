@@ -34,7 +34,7 @@ const App = () => {
   }, [searchTerm])
 
   const getAsyncStories = ()=>{
-    return new Promise(resolve => {
+    new Promise(resolve => {
         setTimeout(() => {
           resolve({data: {stories: initialStories}})
         }, 2000);

@@ -42,8 +42,7 @@ const App = () => {
   }
 
   React.useEffect(()=>{
-    //console.log(getAsyncStories.then, "=== getAsyncStories ===")
-    getAsyncStories().then(result => {
+    getAsyncStories.then(result => {
       setSearchStories(result.data.stories)
     })
   }, [])
