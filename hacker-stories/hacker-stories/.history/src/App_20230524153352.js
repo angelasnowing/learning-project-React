@@ -3,6 +3,21 @@ import axios from 'axios'
 import './App.css';
 
 const App = () => {
+  // const initialStories = [{
+  //     title: 'React',
+  //     url: 'https://reactjs.org/',
+  //     author: 'Jordan Walke',
+  //     num_comments: 3,
+  //     points: 4,
+  //     objectID: 0,
+  //   },{
+  //     title: 'Redux',
+  //     url: 'https://redux.js.org/',
+  //     author: 'Dan Abramov, Andrew Clark',
+  //     num_comments: 2,
+  //     points: 5,
+  //     objectID: 1,
+  // }];
   const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') ?? '');
   const storiesReducer = (state, action) => {
     switch(action.type){
@@ -16,6 +31,7 @@ const App = () => {
   const [stories, dispatchStories] = React.useReducer(storiesReducer, {data: [], isError: false, isLoading: false})
   const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query="
   const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`)
+
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
