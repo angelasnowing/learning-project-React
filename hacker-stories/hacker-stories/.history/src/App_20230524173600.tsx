@@ -183,16 +183,13 @@ const InputWithLabel = ({
   }, [isFocused]);
   return (
     <>
-      <label htmlFor={id} className="label">
-        {children}
-      </label>
+      <label htmlFor={id}>{children}</label>
       <input
         id={id}
         type={type}
         ref={inputRef}
         value={value}
         onChange={onInputChange}
-        className="input"
       />
     </>
   );

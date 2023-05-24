@@ -135,7 +135,7 @@ const SearchForm = ({
 }: SearchFormProps) => {
   return (
     <div>
-      <form onSubmit={onSearchSubmit} className="search-form">
+      <form onSubmit={onSearchSubmit}>
         <InputWithLabel
           id="search"
           type="text"
@@ -146,11 +146,7 @@ const SearchForm = ({
           <strong>Search:</strong>
         </InputWithLabel>
 
-        <button
-          type="submit"
-          disabled={!search}
-          className="button button_large"
-        >
+        <button type="submit" disabled={!search}>
           Submit
         </button>
       </form>
@@ -183,16 +179,13 @@ const InputWithLabel = ({
   }, [isFocused]);
   return (
     <>
-      <label htmlFor={id} className="label">
-        {children}
-      </label>
+      <label htmlFor={id}>{children}</label>
       <input
         id={id}
         type={type}
         ref={inputRef}
         value={value}
         onChange={onInputChange}
-        className="input"
       />
     </>
   );
@@ -230,18 +223,12 @@ const Item = ({ item, onRemoveItem }: ItemProp) => (
     <span style={{ width: "40%" }}>
       <a href={item.url}>{item.title} </a>
     </span>
-    <span style={{ width: "30%" }}> {item.author}</span>
-    <span style={{ width: "10%" }}>{item.num_comments}</span>
-    <span style={{ width: "10%" }}>{item.points}</span>
-    <span style={{ width: "10%" }}>
-      <button
-        className="button button_small"
-        type="button"
-        onClick={() => onRemoveItem(item)}
-      >
-        Dismiss
-      </button>
-    </span>
+    <span> {item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+    <button type="button" onClick={() => onRemoveItem(item)}>
+      Dismiss
+    </button>
   </li>
 );
 

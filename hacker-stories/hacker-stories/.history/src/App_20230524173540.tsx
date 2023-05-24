@@ -146,11 +146,7 @@ const SearchForm = ({
           <strong>Search:</strong>
         </InputWithLabel>
 
-        <button
-          type="submit"
-          disabled={!search}
-          className="button button_large"
-        >
+        <button type="submit" disabled={!search}>
           Submit
         </button>
       </form>
@@ -183,16 +179,13 @@ const InputWithLabel = ({
   }, [isFocused]);
   return (
     <>
-      <label htmlFor={id} className="label">
-        {children}
-      </label>
+      <label htmlFor={id}>{children}</label>
       <input
         id={id}
         type={type}
         ref={inputRef}
         value={value}
         onChange={onInputChange}
-        className="input"
       />
     </>
   );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import axios from "axios";
 import "./App.css";
+import { ReactComponent as Check } from "./check.svg";
 
 type StoriesState = {
   isLoading: Boolean;
@@ -239,7 +240,7 @@ const Item = ({ item, onRemoveItem }: ItemProp) => (
         type="button"
         onClick={() => onRemoveItem(item)}
       >
-        Dismiss
+        <Check height="18px" width="18px" />
       </button>
     </span>
   </li>
