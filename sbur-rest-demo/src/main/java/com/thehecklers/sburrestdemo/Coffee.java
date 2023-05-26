@@ -10,6 +10,9 @@ class Coffee {
 	@Id
 	private String id;
 	private String name;
+	public Coffee(){
+
+	}
 
 	public Coffee(String id, String name){
 		this.id = id;
@@ -28,7 +31,7 @@ class Coffee {
 	}
 
 	public String getName() {
-	    return name;
+		return name;
 	}
 
 	public void setName(String name){

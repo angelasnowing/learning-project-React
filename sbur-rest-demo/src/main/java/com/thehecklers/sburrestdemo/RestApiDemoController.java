@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +15,6 @@ public class RestApiDemoController {
 
     public RestApiDemoController(CoffeeRepository coffeeRepository) {
         this.coffeeRepository = coffeeRepository;
-        this.coffeeRepository.saveAll(List.of(
-                new Coffee("Café Ganador"),
-                new Coffee("Café Lareño"),
-                new Coffee("Café Três Pontas"),
-                new Coffee("Café Cereza")));
     }
 
     @GetMapping
@@ -42,6 +36,18 @@ public class RestApiDemoController {
     ResponseEntity<Coffee> putCoffee(@PathVariable String id, @RequestBody Coffee coffee){
         return (!coffeeRepository.existsById(id)) ?
                 new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED) : new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateCoffee(@PathVariable String id, @RequestBody Coffee coffee) {
+        Optional<Coffee> coffeeOptional = coffeeRepository.findById(id);
+        if (!coffeeOptional.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+        if (coffee.getName() != null){
+            coffee.setName(coffee.getName());
+        }
+        return ResponseEntity.ok("updated");
     }
 
     @DeleteMapping("/{id}")
