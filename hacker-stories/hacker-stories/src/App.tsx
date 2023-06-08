@@ -223,38 +223,30 @@ const List = ({ list, onRemoveItem }: ListProp) => {
 
   return (
     <div>
-      <div>
-        <span>
+      <div style={{ display: "flex", paddingLeft: "40px" }}>
+        <span style={{ width: "40%" }}>
           <button type="button" onClick={() => handleSort("TITLE")}>
             Title
           </button>
         </span>
-        <span>
+        <span style={{ width: "30%" }}>
           <button type="button" onClick={() => handleSort("AUTHOR")}>
             Author
           </button>
         </span>
-        <span>
+        <span style={{ width: "10%" }}>
           <button type="button" onClick={() => handleSort("COMMENT")}>
             Comments
           </button>
         </span>
-        <span>
+        <span style={{ width: "10%" }}>
           <button type="button" onClick={() => handleSort("POINT")}>
             Points
           </button>
         </span>
-        <span>Actions</span>
+        <span style={{ width: "10%" }}>Actions</span>
       </div>
       <ul>
-        <li style={{ display: "flex" }}>
-          <span style={{ width: "40%" }}>Title</span>
-          <span style={{ width: "30%" }}>Author</span>
-          <span style={{ width: "10%" }}>Comments</span>
-          <span style={{ width: "10%" }}>Points</span>
-          <span style={{ width: "10%" }}>Actions</span>
-        </li>
-
         {sortedList.map((item) => (
           <Item
             key={item.objectID}
