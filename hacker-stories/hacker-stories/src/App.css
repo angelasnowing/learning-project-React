@@ -1,9 +1,11 @@
+* {
+  font-family: MonoLisa, Menlo, Monaco, "Courier New", monospace;
+}
 .container {
   height: 100vw;
   padding: 20px;
 
-  background: #83a4d4;
-  background: linear-gradient(to-left, #b6fbff, #83a4d4);
+  background: #eee;
 
   color: #171212;
 }
@@ -61,8 +63,6 @@
 }
 
 .label {
-  border-top: 1px solid #171212;
-  border-left: 1px solid #171212;
   padding-left: 5px;
   font-size: 24px;
 }
